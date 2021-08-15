@@ -7,10 +7,11 @@ import com.maven.community.provider.GitHubProvider;
 import com.maven.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
@@ -21,7 +22,7 @@ import java.util.UUID;
  * @Description
  * @create 2021-08-14 21:09
  */
-@Controller
+@RestController
 public class AuthorizeController {
 
     @Autowired
@@ -52,15 +53,18 @@ public class AuthorizeController {
         GitHubUser user = gitHubProvider.getUser(accessToken);
         if(user != null)
         {
-            //登录成功，写cookie和session
+            //user持久化
             User storeUser = new User();
-            storeUser.setToken(UUID.randomUUID().toString());
+            String token = UUID.randomUUID().toString();
+            storeUser.setToken(token);
             storeUser.setName(user.getName());
             storeUser.setAccountId(String.valueOf(user.getId()));
             storeUser.setGmtCreate(System.currentTimeMillis());
             storeUser.setGmtModified(storeUser.getGmtCreate());
             userService.storeUser(storeUser);
-            request.getSession().setAttribute("user", user);
+            //登录成功，写cookie,  session通过请求转发跳转时查询数据库后写
+            Cookie cookie = new Cookie("token", token);
+            response.addCookie(cookie);
             return "redirect:/";
         }else{
             //登录不成功，重新登录

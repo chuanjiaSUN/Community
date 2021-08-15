@@ -3,6 +3,7 @@ package com.maven.community.mapper;
 import com.maven.community.pojo.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -23,4 +24,11 @@ public interface UserMapper {
     void insert(User user);
 
 
+    /**
+     * find 登录时通过token在数据库查询是否已存在user信息
+     * @param token 字符串token值
+     * @return user 从数据库查询到的用户
+     * */
+    @Select("select * from user where token=#{token}")
+    User find(String token);
 }

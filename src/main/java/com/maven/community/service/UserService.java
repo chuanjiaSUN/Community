@@ -14,4 +14,6 @@ public interface UserService {
      * @param user 用户信息
      * */
     void storeUser(User user);
+
+    User findByToken(String token);
 }
