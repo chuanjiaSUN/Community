@@ -1,4 +1,4 @@
-package com.maven.scjcode.scjproject.controller;
+package com.maven.community.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

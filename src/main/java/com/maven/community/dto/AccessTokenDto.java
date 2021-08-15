@@ -1,4 +1,4 @@
-package com.maven.scjcode.scjproject.dto;
+package com.maven.community.dto;
 
 /**
  * @author sunchuanjia

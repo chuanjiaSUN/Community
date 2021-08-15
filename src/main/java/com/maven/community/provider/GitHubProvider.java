@@ -1,8 +1,8 @@
-package com.maven.scjcode.scjproject.provider;
+package com.maven.community.provider;
 
 import com.alibaba.fastjson.JSON;
-import com.maven.scjcode.scjproject.dto.AccessTokenDto;
-import com.maven.scjcode.scjproject.dto.GitHubUser;
+import com.maven.community.dto.GitHubUser;
+import com.maven.community.dto.AccessTokenDto;
 import okhttp3.*;
 import org.springframework.stereotype.Component;
 
@@ -51,6 +51,7 @@ public class GitHubProvider {
         try (Response response = client.newCall(request).execute()) {
             String string = response.body().string();
             GitHubUser gitHubUser = JSON.parseObject(string, GitHubUser.class);
+            System.out.println(gitHubUser);
             return gitHubUser;
         } catch (IOException e) {
             e.printStackTrace();

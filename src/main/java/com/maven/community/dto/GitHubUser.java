@@ -1,7 +1,9 @@
-package com.maven.scjcode.scjproject.dto;
+package com.maven.community.dto;
 
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.ToString;
 
 /**
  * @author sunchuanjia
@@ -9,6 +11,8 @@ import lombok.Data;
  * @create 2021-08-14 21:35
  */
 @Data
+@Getter
+@ToString
 public class GitHubUser {
     private String name;
     private Long id;

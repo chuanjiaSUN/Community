@@ -1,4 +1,4 @@
-package com.maven.scjcode.scjproject;
+package com.maven.community;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
