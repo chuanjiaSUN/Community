@@ -2,6 +2,7 @@ package com.maven.scjcode.scjproject;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * @author 麻辣兔丁
