@@ -62,6 +62,7 @@ public class AuthorizeController {
             storeUser.setAccountId(String.valueOf(user.getId()));
             storeUser.setGmtCreate(System.currentTimeMillis());
             storeUser.setGmtModified(storeUser.getGmtCreate());
+            storeUser.setAvatarUrl(user.getAvatarUrl());
             userService.storeUser(storeUser);
             //登录成功，写cookie,  session通过请求转发跳转时查询数据库后写
             Cookie cookie = new Cookie("token", token);

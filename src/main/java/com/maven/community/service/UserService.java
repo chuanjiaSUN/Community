@@ -15,5 +15,17 @@ public interface UserService {
      * */
     void storeUser(User user);
 
+    /**
+     * findByToken 通过token查询
+     * @param token github的token信息
+     * @return user
+     * */
     User findByToken(String token);
+
+    /**
+     * findById
+     * @param creator github用户的id
+     * @return user
+     * */
+    User findById(Integer creator);
 }

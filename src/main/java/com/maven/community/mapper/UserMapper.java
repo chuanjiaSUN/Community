@@ -19,8 +19,8 @@ public interface UserMapper {
      * insert 向数据库插入 user信息
      * @param user 授权登录并成功的用户
      * */
-    @Insert("insert into user (name,account_id,token,gmt_create,gmt_modified) values(#{name}, #{accountId}, " +
-            "#{token}, #{gmtCreate}, #{gmtModified})")
+    @Insert("insert into user (name,account_id,token,gmt_create,gmt_modified,avatar_url) values(#{name}, #{accountId}, " +
+            "#{token}, #{gmtCreate}, #{gmtModified}, #{avatarUrl})")
     void insert(User user);
 
 
@@ -31,4 +31,12 @@ public interface UserMapper {
      * */
     @Select("select * from user where token=#{token}")
     User find(String token);
+
+    /**
+     * findById 通过id查询user
+     * @param id github用户的id
+     * @return user
+     * */
+    @Select("select * from user where id=#{id}")
+    User findById(Integer id);
 }
