@@ -23,14 +23,13 @@ public class IndexController {
     @GetMapping("/")
     public String hello(HttpServletRequest request)
     {
-        User user = null;
         Cookie[] cookies = request.getCookies();
-        for (Cookie cookie : cookies)
+        for(Cookie cookie : cookies)
         {
             if ("token".equals(cookie.getName()))
             {
                 String token = cookie.getValue();
-                user = userService.findByToken(token);
+                User user = userService.findByToken(token);
                 if (user != null)
                 {
                     request.getSession().setAttribute("user", user);

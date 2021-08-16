@@ -7,9 +7,9 @@ import com.maven.community.provider.GitHubProvider;
 import com.maven.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +22,7 @@ import java.util.UUID;
  * @Description
  * @create 2021-08-14 21:09
  */
-@RestController
+@Controller
 public class AuthorizeController {
 
     @Autowired
@@ -37,6 +37,7 @@ public class AuthorizeController {
 
     @Autowired
     private UserService userService;
+
     @GetMapping("/callback")
     public String callBack(@RequestParam(name="code") String code,
                            @RequestParam(name = "state") String state,
@@ -51,7 +52,7 @@ public class AuthorizeController {
         accessTokenDto.setState(state);
         String accessToken = gitHubProvider.getAccessToken(accessTokenDto);
         GitHubUser user = gitHubProvider.getUser(accessToken);
-        if(user != null)
+        if(user != null && user.getId() != null)
         {
             //user持久化
             User storeUser = new User();
