@@ -1,5 +1,6 @@
 package com.maven.community.mapper;
 
+import com.maven.community.dto.QuestionDto;
 import com.maven.community.pojo.Question;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -30,4 +31,20 @@ public interface QuestionMapper {
      * */
     @Select("select * from question")
     List<Question> searchList();
+
+    /**
+     * listPage 分页查询
+     * @param offSet 起始页码
+     * @param size 大小
+     * @return list 查询结果
+     * */
+    @Select("select * from question limit #{offSet}, #{size}")
+    List<Question> listPage(Integer offSet, Integer size);
+
+    /**
+     * getCount 获取综述
+     * @return integer
+     * */
+    @Select("select count(1) from question")
+    Integer getCount();
 }

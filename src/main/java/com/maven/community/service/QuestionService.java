@@ -1,5 +1,6 @@
 package com.maven.community.service;
 
+import com.maven.community.dto.PaginationDto;
 import com.maven.community.dto.QuestionDto;
 import com.maven.community.pojo.Question;
 
@@ -28,4 +29,18 @@ public interface QuestionService {
      * @return list 传输对象列表
      * */
     List<QuestionDto> getQuestionDtoList();
+
+    /**
+     * listPage 分页查询
+     * @param page 分页起始页码
+     * @param size 大小
+     * @return list 分页查询结果
+     * */
+    PaginationDto listPage(Integer page, Integer size);
+
+    /**
+     * selectCount 获取数据库中question的总数
+     * @return integer 总数
+     * */
+    Integer selectCount();
 }

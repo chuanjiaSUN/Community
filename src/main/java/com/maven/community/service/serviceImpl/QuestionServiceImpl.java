@@ -1,8 +1,8 @@
 package com.maven.community.service.serviceImpl;
 
+import com.maven.community.dto.PaginationDto;
 import com.maven.community.dto.QuestionDto;
 import com.maven.community.mapper.QuestionMapper;
-import com.maven.community.mapper.UserMapper;
 import com.maven.community.pojo.Question;
 import com.maven.community.pojo.User;
 import com.maven.community.service.QuestionService;
@@ -46,5 +46,36 @@ public class QuestionServiceImpl implements QuestionService {
            questionDtoList.add(new QuestionDto(question, user));
         }
         return questionDtoList;
+    }
+
+    @Override
+    public PaginationDto listPage(Integer page, Integer size) {
+        PaginationDto paginationDto = new PaginationDto();
+        Integer totalCount = selectCount();
+        paginationDto.setPagination(totalCount, page, size);
+        if (page < 1)
+        {
+            page = 1;
+        }
+        if (page > paginationDto.getTotalPages())
+        {
+            page = paginationDto.getTotalPages();
+        }
+
+        Integer offSet = size * (page - 1);
+        List<Question> questionList = questionMapper.listPage(offSet, size);
+        List<QuestionDto> questionDtoList = new ArrayList<>();
+        for (Question question : questionList)
+        {
+            User user = userService.findById(question.getCreator());
+            questionDtoList.add(new QuestionDto(question, user));
+        }
+        paginationDto.setQuestions(questionDtoList);
+        return paginationDto;
+    }
+
+    @Override
+    public Integer selectCount() {
+        return questionMapper.getCount();
     }
 }
