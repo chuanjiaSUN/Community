@@ -43,4 +43,20 @@ public interface QuestionService {
      * @return integer 总数
      * */
     Integer selectCount();
+
+    /**
+     * 查询出某个用户的问题
+     * @param id 用户id
+     * @param page 起始页码
+     * @param size 分页大小
+     * @return paginationDto 分页列表
+     * */
+    PaginationDto listUserQuestions(Integer id, Integer page, Integer size);
+
+    /**
+     * 查询用户问题
+     * @param id 用户id
+     * @return list 问题列表
+     * */
+    List<Question> selectById(Integer id);
 }

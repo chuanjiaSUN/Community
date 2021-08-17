@@ -48,10 +48,52 @@ public class QuestionServiceImpl implements QuestionService {
         return questionDtoList;
     }
 
+    /**显示首页分页*/
     @Override
     public PaginationDto listPage(Integer page, Integer size) {
         PaginationDto paginationDto = new PaginationDto();
         Integer totalCount = selectCount();
+        return setPagination(paginationDto, totalCount, page, size);
+    }
+
+    @Override
+    public Integer selectCount() {
+        return questionMapper.getCount();
+    }
+
+    /**显示单个user分页*/
+    @Override
+    public PaginationDto listUserQuestions(Integer id, Integer page, Integer size) {
+        PaginationDto paginationDto = new PaginationDto();
+        List<Question> userQuestions = selectById(id);
+        paginationDto.setPagination(userQuestions.size(), page, size);
+        if (page < 1)
+        {
+            page = 1;
+        }
+        if (page > paginationDto.getTotalPages())
+        {
+            page = paginationDto.getTotalPages();
+        }
+        Integer offSet = size * (page - 1);
+        List<Question> questionList = questionMapper.listPageById(id, offSet, size);
+        List<QuestionDto> questionDtoList = new ArrayList<>();
+        User user = userService.findById(id);
+        for (Question question : questionList)
+        {
+            questionDtoList.add(new QuestionDto(question, user));
+        }
+        paginationDto.setQuestions(questionDtoList);
+        return paginationDto;
+    }
+
+    @Override
+    public List<Question> selectById(Integer id) {
+        return questionMapper.selectById(id);
+    }
+
+    public PaginationDto setPagination(PaginationDto paginationDto, int totalCount, Integer page, Integer size)
+    {
         paginationDto.setPagination(totalCount, page, size);
         if (page < 1)
         {
@@ -61,7 +103,6 @@ public class QuestionServiceImpl implements QuestionService {
         {
             page = paginationDto.getTotalPages();
         }
-
         Integer offSet = size * (page - 1);
         List<Question> questionList = questionMapper.listPage(offSet, size);
         List<QuestionDto> questionDtoList = new ArrayList<>();
@@ -74,8 +115,7 @@ public class QuestionServiceImpl implements QuestionService {
         return paginationDto;
     }
 
-    @Override
-    public Integer selectCount() {
-        return questionMapper.getCount();
-    }
+
+
+
 }

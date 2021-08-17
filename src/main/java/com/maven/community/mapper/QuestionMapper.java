@@ -4,6 +4,7 @@ import com.maven.community.dto.QuestionDto;
 import com.maven.community.pojo.Question;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
@@ -47,4 +48,23 @@ public interface QuestionMapper {
      * */
     @Select("select count(1) from question")
     Integer getCount();
+
+
+    /**
+     * 查询某人问题
+     * @param id 用户id
+     * @return list
+     * */
+    @Select("select * from question where creator=#{id}")
+    List<Question> selectById(Integer id);
+
+    /**
+     * listPageById 用户分页查询
+     * @param offSet 起始
+     * @param size 大小
+     * @param id userId
+     * @return list 问题
+     * */
+    @Select("SELECT * FROM question WHERE creator = #{id} LIMIT #{offSet},#{size}")
+    List<Question> listPageById(Integer id, Integer offSet, Integer size);
 }
