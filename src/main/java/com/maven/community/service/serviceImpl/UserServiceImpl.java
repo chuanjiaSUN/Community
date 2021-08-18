@@ -31,4 +31,23 @@ public class UserServiceImpl implements UserService {
     public User findById(Integer creator) {
         return userMapper.findById(creator);
     }
+
+    @Override
+    public void createOrUpdate(User user) {
+        User dbUser = userMapper.findByAccountId(user.getAccountId());
+        if (dbUser == null)
+        {
+            user.setGmtCreate(System.currentTimeMillis());
+            user.setGmtModified(user.getGmtCreate());
+            storeUser(user);
+        }else{
+            //若有该user,则更新
+            user.setGmtCreate(System.currentTimeMillis());
+            user.setGmtModified(user.getGmtCreate());
+            user.setAvatarUrl(user.getAvatarUrl());
+            user.setName(user.getName());
+            user.setToken(user.getToken());
+            userMapper.updateUser(user);
+        }
+    }
 }

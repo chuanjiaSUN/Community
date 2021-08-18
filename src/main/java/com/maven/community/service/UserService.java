@@ -29,4 +29,10 @@ public interface UserService {
      * */
     User findById(Integer creator);
 
+
+    /**
+     * createOrUpdate
+     * @param storeUser 需要存储的用户 或 更新的用户
+     * */
+    void createOrUpdate(User storeUser);
 }

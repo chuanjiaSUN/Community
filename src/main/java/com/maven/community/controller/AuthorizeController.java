@@ -60,10 +60,8 @@ public class AuthorizeController {
             storeUser.setToken(token);
             storeUser.setName(user.getName());
             storeUser.setAccountId(String.valueOf(user.getId()));
-            storeUser.setGmtCreate(System.currentTimeMillis());
-            storeUser.setGmtModified(storeUser.getGmtCreate());
             storeUser.setAvatarUrl(user.getAvatarUrl());
-            userService.storeUser(storeUser);
+            userService.createOrUpdate(storeUser);
             //登录成功，写cookie,  session通过请求转发跳转时查询数据库后写
             Cookie cookie = new Cookie("token", token);
             response.addCookie(cookie);
@@ -71,6 +69,17 @@ public class AuthorizeController {
         }else{
             //登录不成功，重新登录
             return "redirect:/";
+        }
     }
+
+    @GetMapping("/logout")
+    public String logOut(HttpServletRequest request,
+                         HttpServletResponse response)
+    {
+        request.getSession().removeAttribute("user");
+        Cookie cookie = new Cookie("token", null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+        return "redirect:/";
     }
 }

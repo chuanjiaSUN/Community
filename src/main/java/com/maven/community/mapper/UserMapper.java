@@ -4,6 +4,7 @@ import com.maven.community.pojo.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -39,4 +40,19 @@ public interface UserMapper {
      * */
     @Select("select * from user where id=#{id}")
     User findById(Integer id);
+
+    /**
+     * findByAccountId 根据accountId查询人
+     * @param accountId 用户唯一id
+     * @return user 用户
+     * */
+    @Select("select * from user where account_id=#{accountId}")
+    User findByAccountId(String accountId);
+
+    /**
+     * updateUser 更新用户
+     * @param user 用户
+     * */
+    @Update("update user set name = #{name}, token = #{token}, gmt_create = #{gmtCreate}, gmt_modified = #{gmtModified}, avatar_url = #{avatarUrl} where account_id = #{accountId}")
+    void updateUser(User user);
 }

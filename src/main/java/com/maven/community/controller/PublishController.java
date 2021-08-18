@@ -74,4 +74,5 @@ public class PublishController {
         questionService.createQuestion(question);
         return "redirect:/";
     }
+
 }

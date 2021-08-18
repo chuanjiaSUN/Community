@@ -5,6 +5,7 @@ import com.maven.community.service.UserService;
 import com.sun.xml.internal.ws.api.FeatureListValidatorAnnotation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -41,6 +42,7 @@ public class SessionInterceptor implements HandlerInterceptor{
                     {
                         request.getSession().setAttribute("user", user);
                     }
+
                     break;
                 }
             }
