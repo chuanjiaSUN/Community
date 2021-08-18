@@ -24,8 +24,6 @@ public class PublishController {
 
     @Autowired
     private QuestionService questionService;
-    @Autowired
-    private UserService userService;
 
     @GetMapping(value = "/publish")
     public String publish()
@@ -60,24 +58,9 @@ public class PublishController {
             model.addAttribute("error", "标签不能为空");
             return "publish";
         }
-        User user = null;
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null && cookies.length != 0)
-        {
-            for (Cookie cookie : cookies)
-            {
-                if ("token".equals(cookie.getName()))
-                {
-                    String token = cookie.getValue();
-                    user = userService.findByToken(token);
-                    if (user != null)
-                    {
-                        request.getSession().setAttribute("user", user);
-                    }
-                    break;
-                }
-            }
-        }
+
+        //校验用户是否登录, 已经通过配置的 拦截器 将 user 写进了 session
+        User user = (User) request.getSession().getAttribute("user");
         if (user == null)
         {
             model.addAttribute("error", "用户未登录");

@@ -25,8 +25,6 @@ import java.util.List;
 @Controller
 public class IndexController {
 
-    @Autowired
-    private UserService userService;
 
     @Autowired
     private QuestionService questionService;
@@ -37,23 +35,6 @@ public class IndexController {
                         @RequestParam(name = "page", defaultValue = "1") Integer page,
                         @RequestParam(name = "size", defaultValue = "5") Integer size)
     {
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null && cookies.length != 0)
-        {
-            for(Cookie cookie : cookies)
-            {
-                if ("token".equals(cookie.getName()))
-                {
-                    String token = cookie.getValue();
-                    User user = userService.findByToken(token);
-                    if (user != null)
-                    {
-                        request.getSession().setAttribute("user", user);
-                    }
-                    break;
-                }
-            }
-        }
         //转发到首页前，查询列表信息
 /*       List<QuestionDto> questionDtoList = questionService.getQuestionDtoList();**/
         PaginationDto pagination = questionService.listPage(page, size);

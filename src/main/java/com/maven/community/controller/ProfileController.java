@@ -40,28 +40,11 @@ public class ProfileController {
                           @RequestParam(name = "page", defaultValue = "1") Integer page,
                           @RequestParam(name = "size", defaultValue = "5") Integer size)
     {
-        //校验用户是否登录
-        User user = null;
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null && cookies.length != 0)
-        {
-            for(Cookie cookie : cookies)
-            {
-                if ("token".equals(cookie.getName()))
-                {
-                    String token = cookie.getValue();
-                    user = userService.findByToken(token);
-                    if (user != null)
-                    {
-                        request.getSession().setAttribute("user", user);
-                    }
-                    break;
-                }
-            }
-        }
+        //校验用户是否登录, 已经通过配置的 拦截器 将 user 写进了 session
+        User user = (User) request.getSession().getAttribute("user");
         if (user == null)
         {
-            return "index";
+            return "redirect:/";
         }
 
         if (PROFILE_QUESTIONS.equals(action))
