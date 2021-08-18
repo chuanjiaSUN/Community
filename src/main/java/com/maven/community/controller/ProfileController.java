@@ -1,7 +1,6 @@
 package com.maven.community.controller;
 
 import com.maven.community.dto.PaginationDto;
-import com.maven.community.dto.QuestionDto;
 import com.maven.community.pojo.User;
 import com.maven.community.service.QuestionService;
 import com.maven.community.service.UserService;
@@ -12,10 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.naming.Name;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 /**
  * @author sunchuanjia

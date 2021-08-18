@@ -92,6 +92,14 @@ public class QuestionServiceImpl implements QuestionService {
         return questionMapper.selectById(id);
     }
 
+    @Override
+    public QuestionDto getById(Integer id) {
+        Question question = questionMapper.getById(id);
+        Integer creator = question.getCreator();
+        User user = userService.findById(creator);
+        return new QuestionDto(question, user);
+    }
+
     public PaginationDto setPagination(PaginationDto paginationDto, int totalCount, Integer page, Integer size)
     {
         paginationDto.setPagination(totalCount, page, size);

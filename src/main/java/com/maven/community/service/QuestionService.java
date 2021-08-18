@@ -59,4 +59,11 @@ public interface QuestionService {
      * @return list 问题列表
      * */
     List<Question> selectById(Integer id);
+
+    /**
+     * getById 查询某人的提问
+     * @param id user的accountId
+     * @return questionDto
+     * */
+    QuestionDto getById(Integer id);
 }

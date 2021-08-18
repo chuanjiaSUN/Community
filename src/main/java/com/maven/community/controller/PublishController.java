@@ -3,14 +3,12 @@ package com.maven.community.controller;
 import com.maven.community.pojo.Question;
 import com.maven.community.pojo.User;
 import com.maven.community.service.QuestionService;
-import com.maven.community.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 /**

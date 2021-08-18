@@ -67,4 +67,12 @@ public interface QuestionMapper {
      * */
     @Select("SELECT * FROM question WHERE creator = #{id} LIMIT #{offSet},#{size}")
     List<Question> listPageById(Integer id, Integer offSet, Integer size);
+
+    /**
+     * getById 查询某个问题
+     * @param id 问题id
+     * @return question
+     * */
+    @Select("select * from question where id = #{id}")
+    Question getById(Integer id);
 }
