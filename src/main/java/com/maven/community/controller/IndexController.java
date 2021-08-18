@@ -39,7 +39,6 @@ public class IndexController {
 /*       List<QuestionDto> questionDtoList = questionService.getQuestionDtoList();**/
         PaginationDto pagination = questionService.listPage(page, size);
         model.addAttribute("pagination", pagination);
-        //测试
         return "index";
     }
 }
