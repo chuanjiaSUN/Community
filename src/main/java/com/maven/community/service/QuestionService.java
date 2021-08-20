@@ -66,4 +66,10 @@ public interface QuestionService {
      * @return questionDto
      * */
     QuestionDto getById(Integer id);
+
+    /**
+     * 插入或更新question表
+     * @param question 编辑的问题
+     * */
+    void createOrUpdate(Question question);
 }

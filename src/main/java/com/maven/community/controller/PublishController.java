@@ -1,8 +1,10 @@
 package com.maven.community.controller;
 
+import com.maven.community.dto.QuestionDto;
 import com.maven.community.pojo.Question;
 import com.maven.community.pojo.User;
 import com.maven.community.service.QuestionService;
+import com.sun.xml.internal.ws.resources.HttpserverMessages;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,6 +25,18 @@ public class PublishController {
     @Autowired
     private QuestionService questionService;
 
+    @GetMapping("/publish/{id}")
+    public String edit(@PathVariable(name = "id") Integer id,
+                       Model model)
+    {
+        QuestionDto questionById = questionService.getById(id);
+        model.addAttribute("title", questionById.getQuestion().getTitle());
+        model.addAttribute("description", questionById.getQuestion().getDescription());
+        model.addAttribute("tag", questionById.getQuestion().getTag());
+        model.addAttribute("id", questionById.getQuestion().getId());
+        return "publish";
+    }
+
     @GetMapping(value = "/publish")
     public String publish()
     {
@@ -34,6 +48,7 @@ public class PublishController {
             @RequestParam(value = "title", required = false) String title,
             @RequestParam(value = "description", required = false) String description,
             @RequestParam(value = "tag", required = false) String tag,
+            @RequestParam(value = "id", required = false) Integer id,
             HttpServletRequest request,
             Model model
     )
@@ -65,13 +80,13 @@ public class PublishController {
             return "publish";
         }
         Question question = new Question();
+        question.setId(id);
         question.setTitle(title);
         question.setDescription(description);
         question.setTag(tag);
         question.setCreator(user.getId());
-        question.setGmtCreate(System.currentTimeMillis());
-        question.setGmtModified(question.getGmtCreate());
-        questionService.createQuestion(question);
+        /*questionService.createQuestion(question);*/
+        questionService.createOrUpdate(question);
         return "redirect:/";
     }
 

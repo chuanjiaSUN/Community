@@ -2,10 +2,7 @@ package com.maven.community.mapper;
 
 import com.maven.community.dto.QuestionDto;
 import com.maven.community.pojo.Question;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -75,4 +72,11 @@ public interface QuestionMapper {
      * */
     @Select("select * from question where id = #{id}")
     Question getById(Integer id);
+
+    /**
+     * 更新表 question
+     * @param question 编辑的问题
+     * */
+    @Update("update question set title = #{title}, description = #{description}, gmt_create = #{gmtCreate}, gmt_modified = #{gmtModified}, creator = #{creator}, tag = #{tag} where id = #{id}")
+    void update(Question question);
 }

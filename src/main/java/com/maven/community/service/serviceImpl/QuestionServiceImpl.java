@@ -100,6 +100,20 @@ public class QuestionServiceImpl implements QuestionService {
         return new QuestionDto(question, user);
     }
 
+    @Override
+    public void createOrUpdate(Question question) {
+        question.setGmtCreate(System.currentTimeMillis());
+        question.setGmtModified(question.getGmtCreate());
+        if (question.getId() == null)
+        {
+            //创建
+            questionMapper.createQuestion(question);
+        }else{
+            //更新
+            questionMapper.update(question);
+        }
+    }
+
     public PaginationDto setPagination(PaginationDto paginationDto, int totalCount, Integer page, Integer size)
     {
         paginationDto.setPagination(totalCount, page, size);
