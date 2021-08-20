@@ -2,9 +2,12 @@ package com.maven.community.service.serviceImpl;
 
 import com.maven.community.mapper.UserMapper;
 import com.maven.community.pojo.User;
+import com.maven.community.pojo.UserExample;
 import com.maven.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author sunchuanjia
@@ -23,18 +26,39 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByToken(String token) {
-       return userMapper.find(token);
+    public List<User> findByToken(String token) {
+        UserExample userExample = new UserExample();
+        userExample.createCriteria()
+                .andTokenEqualTo(token);
+        List<User> users = userMapper.selectByExample(userExample);
+        return users;
     }
 
     @Override
     public User findById(Integer creator) {
-        return userMapper.findById(creator);
+        UserExample userExample = new UserExample();
+        userExample.createCriteria().andIdEqualTo(creator);
+        List<User> users = userMapper.selectByExample(userExample);
+        if (users.size() != 0)
+        {
+            return users.get(0);
+        }else{
+            return null;
+        }
     }
 
     @Override
     public void createOrUpdate(User user) {
-        User dbUser = userMapper.findByAccountId(user.getAccountId());
+        UserExample userExample = new UserExample();
+        userExample.createCriteria().andAccountIdEqualTo(user.getAccountId());
+        List<User> users = userMapper.selectByExample(userExample);
+        User dbUser;
+        if (users.size() != 0)
+        {
+            dbUser = users.get(0);
+        }else{
+            dbUser = null;
+        }
         if (dbUser == null)
         {
             user.setGmtCreate(System.currentTimeMillis());
@@ -42,12 +66,14 @@ public class UserServiceImpl implements UserService {
             storeUser(user);
         }else{
             //若有该user,则更新
-            user.setGmtCreate(System.currentTimeMillis());
-            user.setGmtModified(user.getGmtCreate());
-            user.setAvatarUrl(user.getAvatarUrl());
-            user.setName(user.getName());
-            user.setToken(user.getToken());
-            userMapper.updateUser(user);
+            User updateUser = new User();
+            updateUser.setToken(user.getToken());
+            updateUser.setName(user.getName());
+            updateUser.setGmtModified(System.currentTimeMillis());
+            updateUser.setAvatarUrl(user.getAvatarUrl());
+            UserExample example = new UserExample();
+            example.createCriteria().andIdEqualTo(dbUser.getId());
+            userMapper.updateByExampleSelective(updateUser, userExample);
         }
     }
 }

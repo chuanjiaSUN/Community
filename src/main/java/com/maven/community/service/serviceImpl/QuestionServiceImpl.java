@@ -4,9 +4,11 @@ import com.maven.community.dto.PaginationDto;
 import com.maven.community.dto.QuestionDto;
 import com.maven.community.mapper.QuestionMapper;
 import com.maven.community.pojo.Question;
+import com.maven.community.pojo.QuestionExample;
 import com.maven.community.pojo.User;
 import com.maven.community.service.QuestionService;
 import com.maven.community.service.UserService;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,17 +30,17 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public void createQuestion(Question question) {
-        questionMapper.createQuestion(question);
+        questionMapper.insert(question);
     }
 
     @Override
     public List<Question> searchList() {
-        return questionMapper.searchList();
+        return questionMapper.selectByExample(new QuestionExample());
     }
 
     @Override
     public List<QuestionDto> getQuestionDtoList() {
-        List<Question> questions = questionMapper.searchList();
+        List<Question> questions = questionMapper.selectByExample(new QuestionExample());
         List<QuestionDto> questionDtoList = new ArrayList<>();
         for (Question question : questions)
         {
@@ -58,7 +60,7 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public Integer selectCount() {
-        return questionMapper.getCount();
+        return (int)questionMapper.countByExample(new QuestionExample());
     }
 
     /**显示单个user分页*/
@@ -76,7 +78,10 @@ public class QuestionServiceImpl implements QuestionService {
             page = paginationDto.getTotalPages();
         }
         Integer offSet = size * (page - 1);
-        List<Question> questionList = questionMapper.listPageById(id, offSet, size);
+        /*List<Question> questionList = questionMapper.listPageById(id, offSet, size);*/
+        QuestionExample questionExample = new QuestionExample();
+        questionExample.createCriteria().andCreatorEqualTo(id);
+        List<Question> questionList = questionMapper.selectByExampleWithBLOBsWithRowbounds(questionExample, new RowBounds(offSet, size));
         List<QuestionDto> questionDtoList = new ArrayList<>();
         User user = userService.findById(id);
         for (Question question : questionList)
@@ -89,12 +94,18 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public List<Question> selectById(Integer id) {
-        return questionMapper.selectById(id);
+        QuestionExample questionExample = new QuestionExample();
+        questionExample.createCriteria().andCreatorEqualTo(id);
+        return questionMapper.selectByExample(questionExample);
     }
 
     @Override
     public QuestionDto getById(Integer id) {
-        Question question = questionMapper.getById(id);
+        QuestionExample questionExample = new QuestionExample();
+        questionExample.createCriteria().andIdEqualTo(id);
+        /*Question question = questionMapper.getById(id);*/
+        List<Question> questionList = questionMapper.selectByExample(questionExample);
+        Question question =  questionList.get(0);
         Integer creator = question.getCreator();
         User user = userService.findById(creator);
         return new QuestionDto(question, user);
@@ -102,15 +113,24 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public void createOrUpdate(Question question) {
-        question.setGmtCreate(System.currentTimeMillis());
-        question.setGmtModified(question.getGmtCreate());
         if (question.getId() == null)
         {
             //创建
-            questionMapper.createQuestion(question);
+            /*questionMapper.createQuestion(question);*/
+            question.setGmtCreate(System.currentTimeMillis());
+            question.setGmtModified(question.getGmtCreate());
+            questionMapper.insert(question);
         }else{
             //更新
-            questionMapper.update(question);
+            /*questionMapper.update(question);*/
+            Question updateQuestion = new Question();
+            QuestionExample questionExample = new QuestionExample();
+            questionExample.createCriteria().andIdEqualTo(question.getId());
+            updateQuestion.setGmtModified(System.currentTimeMillis());
+            updateQuestion.setTitle(question.getTitle());
+            updateQuestion.setDescription(question.getDescription());
+            updateQuestion.setTag(question.getTag());
+            questionMapper.updateByExampleSelective(updateQuestion, questionExample);
         }
     }
 
@@ -126,7 +146,8 @@ public class QuestionServiceImpl implements QuestionService {
             page = paginationDto.getTotalPages();
         }
         Integer offSet = size * (page - 1);
-        List<Question> questionList = questionMapper.listPage(offSet, size);
+        /*List<Question> questionList = questionMapper.listPage(offSet, size);*/
+        List<Question> questionList = questionMapper.selectByExampleWithBLOBsWithRowbounds(new QuestionExample(), new RowBounds(offSet, size));
         List<QuestionDto> questionDtoList = new ArrayList<>();
         for (Question question : questionList)
         {

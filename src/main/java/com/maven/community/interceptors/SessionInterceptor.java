@@ -2,7 +2,6 @@ package com.maven.community.interceptors;
 
 import com.maven.community.pojo.User;
 import com.maven.community.service.UserService;
-import com.sun.xml.internal.ws.api.FeatureListValidatorAnnotation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * @author sunchuanjia
@@ -29,7 +29,6 @@ public class SessionInterceptor implements HandlerInterceptor{
 
         //检查登录逻辑
         Cookie[] cookies = request.getCookies();
-        User user = null;
         if (cookies != null && cookies.length != 0)
         {
             for(Cookie cookie : cookies)
@@ -37,10 +36,10 @@ public class SessionInterceptor implements HandlerInterceptor{
                 if ("token".equals(cookie.getName()))
                 {
                     String token = cookie.getValue();
-                    user = userService.findByToken(token);
-                    if (user != null)
+                    List<User> users = userService.findByToken(token);
+                    if (users.size() != 0)
                     {
-                        request.getSession().setAttribute("user", user);
+                        request.getSession().setAttribute("user", users.get(0));
                     }
 
                     break;

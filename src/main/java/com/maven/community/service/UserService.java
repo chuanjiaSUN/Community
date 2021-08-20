@@ -3,6 +3,8 @@ package com.maven.community.service;
 
 import com.maven.community.pojo.User;
 
+import java.util.List;
+
 /**
  * @author sunchuanjia
  * @Description
@@ -20,7 +22,7 @@ public interface UserService {
      * @param token github的token信息
      * @return user
      * */
-    User findByToken(String token);
+    List<User> findByToken(String token);
 
     /**
      * findById

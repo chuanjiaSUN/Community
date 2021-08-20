@@ -5,3 +5,7 @@
 [Boot Strap 文档] https://v3.bootcss.com/
 
 ## 工具
+
+```bash
+mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate
+```
