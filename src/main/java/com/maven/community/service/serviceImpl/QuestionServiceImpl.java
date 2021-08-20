@@ -2,6 +2,8 @@ package com.maven.community.service.serviceImpl;
 
 import com.maven.community.dto.PaginationDto;
 import com.maven.community.dto.QuestionDto;
+import com.maven.community.exception.CustomizeErrorCode;
+import com.maven.community.exception.CustomizeException;
 import com.maven.community.mapper.QuestionMapper;
 import com.maven.community.pojo.Question;
 import com.maven.community.pojo.QuestionExample;
@@ -105,6 +107,10 @@ public class QuestionServiceImpl implements QuestionService {
         questionExample.createCriteria().andIdEqualTo(id);
         /*Question question = questionMapper.getById(id);*/
         List<Question> questionList = questionMapper.selectByExample(questionExample);
+        if (questionList.size() == 0)
+        {
+            throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+        }
         Question question =  questionList.get(0);
         Integer creator = question.getCreator();
         User user = userService.findById(creator);
@@ -130,7 +136,11 @@ public class QuestionServiceImpl implements QuestionService {
             updateQuestion.setTitle(question.getTitle());
             updateQuestion.setDescription(question.getDescription());
             updateQuestion.setTag(question.getTag());
-            questionMapper.updateByExampleSelective(updateQuestion, questionExample);
+            int update = questionMapper.updateByExampleSelective(updateQuestion, questionExample);
+            if (update != 1)
+            {
+                throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+            }
         }
     }
 

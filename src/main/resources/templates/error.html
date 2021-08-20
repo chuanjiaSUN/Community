@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-CN">
+<head>
+    <title>码匠社区</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href= "/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="/css/community.css"/>
+    <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
+    <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+
+</head>
+<body>
+<!-- 引入导航栏-->
+<div th:insert="~{navigation :: nav}"></div>
+<div class="jumbotron">
+    <h1>出错辣!</h1>
+    <p th:text="${message}">要不然待会再试试</p>
+    <p><a class="btn btn-primary btn-lg" href="/" role="button">返回主页</a></p>
+</div>
+</body>
+</html>
