@@ -27,6 +27,7 @@ public class CustomizeExceptionController {
             model.addAttribute("message", ex.getMessage());
         }else{
             model.addAttribute("message", "服务器冒烟了，要不然稍后再试试!!!");
+            ex.printStackTrace();
         }
         return new ModelAndView("error");
     }

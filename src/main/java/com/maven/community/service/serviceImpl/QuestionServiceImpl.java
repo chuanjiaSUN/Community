@@ -4,6 +4,7 @@ import com.maven.community.dto.PaginationDto;
 import com.maven.community.dto.QuestionDto;
 import com.maven.community.exception.CustomizeErrorCode;
 import com.maven.community.exception.CustomizeException;
+import com.maven.community.mapper.QuestionExtMapper;
 import com.maven.community.mapper.QuestionMapper;
 import com.maven.community.pojo.Question;
 import com.maven.community.pojo.QuestionExample;
@@ -29,6 +30,9 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private QuestionExtMapper questionExtMapper;
 
     @Override
     public void createQuestion(Question question) {
@@ -142,6 +146,14 @@ public class QuestionServiceImpl implements QuestionService {
                 throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
             }
         }
+    }
+
+    @Override
+    public void incView(Integer id) {
+        Question question = new Question();
+        question.setId(id);
+        question.setViewCount(1);
+        questionExtMapper.incView(question);
     }
 
     public PaginationDto setPagination(PaginationDto paginationDto, int totalCount, Integer page, Integer size)

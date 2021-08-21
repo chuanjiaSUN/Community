@@ -72,4 +72,10 @@ public interface QuestionService {
      * @param question 编辑的问题
      * */
     void createOrUpdate(Question question);
+
+    /**
+     *
+     * @param id 累加阅读数
+     * */
+    void incView(Integer id);
 }

@@ -37,6 +37,7 @@ public class CustomizeErrorController implements ErrorController {
         {
             model.addAttribute("message", "服务器出问题了，请稍后再试试");
         }
+
         return  new ModelAndView("error");
     }
 
