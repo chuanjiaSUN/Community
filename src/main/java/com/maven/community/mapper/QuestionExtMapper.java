@@ -1,5 +1,6 @@
 package com.maven.community.mapper;
 
+import com.maven.community.pojo.Comment;
 import com.maven.community.pojo.Question;
 import com.maven.community.pojo.QuestionExample;
 import org.apache.ibatis.annotations.Param;
@@ -16,4 +17,11 @@ public interface QuestionExtMapper {
      * @return int
      * */
     int incView(Question record);
+
+    /**
+     * incComment 增加回复数
+     * @param record 问题
+     * @return int
+     * */
+    int incComment(Question record);
 }

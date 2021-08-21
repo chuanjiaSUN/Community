@@ -5,7 +5,9 @@ import com.maven.community.exception.CustomizeErrorCode;
 import com.maven.community.exception.CustomizeException;
 import com.maven.community.mapper.CommentMapper;
 import com.maven.community.pojo.Comment;
+import com.maven.community.pojo.Question;
 import com.maven.community.service.CommentService;
+import com.maven.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,8 @@ import org.springframework.stereotype.Service;
 public class CommentServiceImpl implements CommentService {
     @Autowired
     private CommentMapper commentMapper;
+    @Autowired
+    private QuestionService questionService;
     @Override
     public void insert(Comment comment) {
         if (comment.getParentId() == null || comment.getParentId() == 0)
@@ -39,8 +43,14 @@ public class CommentServiceImpl implements CommentService {
             commentMapper.insert(comment);
         }else {
             //回复问题
-
+            Question question = questionService.selectByPrimaryKey(comment.getParentId());
+            if (question == null)
+            {
+                throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+            }
+            commentMapper.insert(comment);
+            question.setCommentCount(1);
+            questionService.incCommentCount(question);
         }
-        commentMapper.insert(comment);
     }
 }

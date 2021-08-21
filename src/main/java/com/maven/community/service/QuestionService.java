@@ -74,8 +74,21 @@ public interface QuestionService {
     void createOrUpdate(Question question);
 
     /**
-     *
+     *incView 累积回复数
      * @param id 累加阅读数
      * */
     void incView(Long id);
+
+    /**
+     * selectByPrimaryKey 查找问题
+     * @param parentId 回复的id
+     * @return question 回复
+     * */
+    Question selectByPrimaryKey(Long parentId);
+
+    /**
+     * incCommentCount 增加回复数
+     * @param question 问题
+     * */
+    void incCommentCount(Question question);
 }

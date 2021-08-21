@@ -129,6 +129,9 @@ public class QuestionServiceImpl implements QuestionService {
             /*questionMapper.createQuestion(question);*/
             question.setGmtCreate(System.currentTimeMillis());
             question.setGmtModified(question.getGmtCreate());
+            question.setViewCount(0);
+            question.setLikeCount(0);
+            question.setCommentCount(0);
             questionMapper.insert(question);
         }else{
             //更新
@@ -154,6 +157,16 @@ public class QuestionServiceImpl implements QuestionService {
         question.setId(id);
         question.setViewCount(1);
         questionExtMapper.incView(question);
+    }
+
+    @Override
+    public Question selectByPrimaryKey(Long parentId) {
+        return questionMapper.selectByPrimaryKey(parentId);
+    }
+
+    @Override
+    public void incCommentCount(Question question) {
+        questionExtMapper.incComment(question);
     }
 
     public PaginationDto setPagination(PaginationDto paginationDto, int totalCount, Integer page, Integer size)
