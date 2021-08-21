@@ -29,7 +29,7 @@ public interface UserService {
      * @param creator github用户的id
      * @return user
      * */
-    User findById(Integer creator);
+    User findById(Long creator);
 
 
     /**

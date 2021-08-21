@@ -11,4 +11,9 @@ public interface ICustomizeErrorCode {
      * @return string 错误信息
      * */
     String getMessage();
+    /**
+     * getCode
+     * @return code码
+     * */
+    Integer getCode();
 }

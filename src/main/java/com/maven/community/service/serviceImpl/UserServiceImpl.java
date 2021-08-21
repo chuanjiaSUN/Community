@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findById(Integer creator) {
+    public User findById(Long creator) {
         UserExample userExample = new UserExample();
         userExample.createCriteria().andIdEqualTo(creator);
         List<User> users = userMapper.selectByExample(userExample);

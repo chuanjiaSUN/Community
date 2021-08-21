@@ -51,21 +51,21 @@ public interface QuestionService {
      * @param size 分页大小
      * @return paginationDto 分页列表
      * */
-    PaginationDto listUserQuestions(Integer id, Integer page, Integer size);
+    PaginationDto listUserQuestions(Long id, Integer page, Integer size);
 
     /**
      * 查询用户问题
      * @param id 用户id
      * @return list 问题列表
      * */
-    List<Question> selectById(Integer id);
+    List<Question> selectById(Long id);
 
     /**
      * getById 查询某人的提问
      * @param id user的accountId
      * @return questionDto
      * */
-    QuestionDto getById(Integer id);
+    QuestionDto getById(Long id);
 
     /**
      * 插入或更新question表
@@ -77,5 +77,5 @@ public interface QuestionService {
      *
      * @param id 累加阅读数
      * */
-    void incView(Integer id);
+    void incView(Long id);
 }

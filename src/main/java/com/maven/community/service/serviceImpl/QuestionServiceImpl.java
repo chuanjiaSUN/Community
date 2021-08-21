@@ -71,7 +71,7 @@ public class QuestionServiceImpl implements QuestionService {
 
     /**显示单个user分页*/
     @Override
-    public PaginationDto listUserQuestions(Integer id, Integer page, Integer size) {
+    public PaginationDto listUserQuestions(Long id, Integer page, Integer size) {
         PaginationDto paginationDto = new PaginationDto();
         List<Question> userQuestions = selectById(id);
         paginationDto.setPagination(userQuestions.size(), page, size);
@@ -99,14 +99,14 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public List<Question> selectById(Integer id) {
+    public List<Question> selectById(Long id) {
         QuestionExample questionExample = new QuestionExample();
         questionExample.createCriteria().andCreatorEqualTo(id);
         return questionMapper.selectByExample(questionExample);
     }
 
     @Override
-    public QuestionDto getById(Integer id) {
+    public QuestionDto getById(Long id) {
         QuestionExample questionExample = new QuestionExample();
         questionExample.createCriteria().andIdEqualTo(id);
         /*Question question = questionMapper.getById(id);*/
@@ -116,7 +116,7 @@ public class QuestionServiceImpl implements QuestionService {
             throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
         }
         Question question =  questionList.get(0);
-        Integer creator = question.getCreator();
+        Long creator = question.getCreator();
         User user = userService.findById(creator);
         return new QuestionDto(question, user);
     }
@@ -149,7 +149,7 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public void incView(Integer id) {
+    public void incView(Long id) {
         Question question = new Question();
         question.setId(id);
         question.setViewCount(1);
