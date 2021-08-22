@@ -10,6 +10,7 @@ import com.maven.community.service.CommentService;
 import com.maven.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author sunchuanjia
@@ -22,6 +23,8 @@ public class CommentServiceImpl implements CommentService {
     private CommentMapper commentMapper;
     @Autowired
     private QuestionService questionService;
+
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void insert(Comment comment) {
         if (comment.getParentId() == null || comment.getParentId() == 0)
