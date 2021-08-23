@@ -1,6 +1,6 @@
 package com.maven.community.controller;
 
-import com.maven.community.dto.CommentDto;
+import com.maven.community.dto.CommenCreatetDto;
 import com.maven.community.dto.ResultDto;
 import com.maven.community.exception.CustomizeErrorCode;
 import com.maven.community.pojo.Comment;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 
 /**
  * @author sunchuanjia
@@ -33,7 +32,7 @@ public class CommentController {
      * */
     @ResponseBody
     @RequestMapping(value = "/comment", method = RequestMethod.POST)
-    public Object post(@RequestBody CommentDto commentDto,
+    public Object post(@RequestBody CommenCreatetDto commentDto,
                        HttpServletRequest request)
     {
         User user = (User)request.getSession().getAttribute("user");
@@ -47,7 +46,7 @@ public class CommentController {
         comment.setType(commentDto.getType());
         comment.setGmtCreat(System.currentTimeMillis());
         comment.setGmtModified(System.currentTimeMillis());
-        comment.setCommentator(1L);
+        comment.setCommentator(user.getId());
         comment.setLikeCount(0L);
         commentService.insert(comment);
         return ResultDto.okOf();

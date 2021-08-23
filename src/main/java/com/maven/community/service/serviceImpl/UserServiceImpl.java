@@ -76,4 +76,9 @@ public class UserServiceImpl implements UserService {
             userMapper.updateByExampleSelective(updateUser, userExample);
         }
     }
+
+    @Override
+    public List<User> selectByExample(UserExample example) {
+        return userMapper.selectByExample(example);
+    }
 }

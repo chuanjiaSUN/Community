@@ -2,6 +2,7 @@ package com.maven.community.service;
 
 
 import com.maven.community.pojo.User;
+import com.maven.community.pojo.UserExample;
 
 import java.util.List;
 
@@ -37,4 +38,11 @@ public interface UserService {
      * @param storeUser 需要存储的用户 或 更新的用户
      * */
     void createOrUpdate(User storeUser);
+
+    /**
+     * selectByExample APi方法
+     * @param example 对象
+     * @return list
+     * */
+    List<User> selectByExample(UserExample example);
 }
