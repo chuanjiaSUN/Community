@@ -6,6 +6,7 @@ import com.maven.community.exception.CustomizeErrorCode;
 import com.maven.community.pojo.Comment;
 import com.maven.community.pojo.User;
 import com.maven.community.service.CommentService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,6 +40,10 @@ public class CommentController {
         if (user == null)
         {
             return ResultDto.errorOf(CustomizeErrorCode.NO_LOGIN);
+        }
+        if (commentDto == null || StringUtils.isBlank(commentDto.getContent()))
+        {
+            return ResultDto.errorOf(CustomizeErrorCode.CONTENT_IS_EMPTY);
         }
         Comment comment = new Comment();
         comment.setParentId(commentDto.getParentId());

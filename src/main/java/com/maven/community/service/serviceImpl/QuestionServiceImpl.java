@@ -107,15 +107,20 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public QuestionDto getById(Long id) {
-        QuestionExample questionExample = new QuestionExample();
-        questionExample.createCriteria().andIdEqualTo(id);
+//        QuestionExample questionExample = new QuestionExample();
+//        questionExample.createCriteria().andIdEqualTo(id);
         /*Question question = questionMapper.getById(id);*/
-        List<Question> questionList = questionMapper.selectByExample(questionExample);
-        if (questionList.size() == 0)
+//        List<Question> questionList = questionMapper.selectByExample(questionExample);
+        Question question = questionMapper.selectByPrimaryKey(id);
+//        if (questionList.size() == 0)
+//        {
+//            throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+//        }
+        if (question == null)
         {
             throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
         }
-        Question question =  questionList.get(0);
+//        Question question =  questionList.get(0);
         Long creator = question.getCreator();
         User user = userService.findById(creator);
         return new QuestionDto(question, user);
