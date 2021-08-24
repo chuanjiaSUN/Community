@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="/css/community.css">
     <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
     <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+    <script src="/js/community.js" type="application/javascript"></script>
+
 
 </head>
 <body>
@@ -18,20 +20,47 @@
         <div class="col-lg-9 col-md-12 col-sm-12" >
             <h2><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 发起</h2>
             <hr>
-
+            <!--提问-->
             <form action="/publish" method="post">
                 <input type="hidden" name="id" th:value="${id}">
+                <!--标题-->
                 <div class="form-group">
                     <label for="title">问题标题(简单扼要) ：</label>
-                    <input type="text" class="form-control" th:value="${title}" name="title" id="title" placeholder="问题标题__">
+                    <input type="text" class="form-control" th:value="${title}" name="title" id="title"
+                           autocomplete="off"
+                           placeholder="问题标题__">
                 </div>
+                <!--描述-->
                 <div class="form-group">
                     <label for="description">问题补充(必填，请参照右侧提示)：</label>
                     <textarea class="form-control" th:value="${description}" name="description" id="description" cols="30" rows="10"></textarea>
                 </div>
+                <!--标签-->
                 <div class="form-group">
                     <label for="tag">添加标签</label>
-                    <input type="text" class="form-control" th:value="${tag}" name="tag" id="tag" placeholder="输入标签，以，号分割">
+                    <input type="text" class="form-control" th:value="${tag}" name="tag" id="tag"
+                           autocomplete="off"
+                           placeholder="输入标签，以，号分割"
+                            onclick="showSelectTag()">
+                    <!--标签库-->
+                    <div id="select-tag" class="publish-tag-tab">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" th:each="selectCategory : ${tags}">
+                                <a th:href="${'#'+selectCategory.categoryName}" aria-controls="home" role="tab"
+                                                                      data-toggle="tab" th:text="${selectCategory.categoryName}"></a>
+                            </li>
+                        </ul>
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane" th:id="${selectCategory.categoryName}" th:each="selectCategory : ${tags}">
+                                <span class="label label-info" th:each="selectTag : ${selectCategory.tags}">
+                                    <span class="glyphicon glyphicon-tags" onclick="selectTag(this)" th:data-tag="${selectTag}"
+                                          th:text="${selectTag}"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="container-fluid main">

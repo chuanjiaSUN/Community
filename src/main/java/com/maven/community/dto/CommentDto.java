@@ -11,8 +11,6 @@ import lombok.Setter;
  * @create 2021-08-23 16:03
  */
 @Data
-@Setter
-@Getter
 public class CommentDto {
     private Long id;
     private Long parentId;
