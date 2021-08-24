@@ -30,7 +30,11 @@
                     <span class="text-desc">
                         •<span th:text="${question.question.commentCount}"></span>个回复 •
                         <span th:text="${question.question.viewCount}"></span>次浏览 •
-                        <span th:text="${#dates.format(question.question.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>发布
+                        <span th:text="${#dates.format(question.question.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>发布 •
+                         <a th:href="@{'/publish/' + ${question.question.id}}" class="community-menu"
+                            th:if="${session.user != null && session.user.id == question.question.creator}">
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true">编辑</span>
+                    </a>
                     </span>
                 </div>
             </div>
@@ -66,7 +70,7 @@
             <div class="list-group section">
                 <a href="/profile/questions"  th:class="${section== 'questions'}? 'active list-group-item' : 'list-group-item'">
                     我的问题
-                    <span class="badge">17</span>
+                    <span class="badge"></span>
                 </a>
                 <a href="/profile/replies" th:class="${section == 'replies'}? 'active list-group-item' : 'list-group-item'">
                     最新回复
