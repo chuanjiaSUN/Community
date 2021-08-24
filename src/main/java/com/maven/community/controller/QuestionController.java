@@ -1,8 +1,8 @@
 package com.maven.community.controller;
 
-import com.maven.community.dto.CommenCreatetDto;
 import com.maven.community.dto.CommentDto;
 import com.maven.community.dto.QuestionDto;
+import com.maven.community.enums.CommentTypeEnum;
 import com.maven.community.service.CommentService;
 import com.maven.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +33,7 @@ public class QuestionController {
     {
         QuestionDto questionDto = questionService.getById(id);
         //CommentDto是后端传给前端的， CommentCreateDto是前端传给后端的
-        List<CommentDto> comments = commentService.listByQuestionId(id);
+        List<CommentDto> comments = commentService.listByQuestionId(id, CommentTypeEnum.QUESTION);
         //累加阅读数
         questionService.incView(id);
         model.addAttribute("question", questionDto);

@@ -1,8 +1,8 @@
 package com.maven.community.service;
 
 import com.maven.community.dto.CommentDto;
+import com.maven.community.enums.CommentTypeEnum;
 import com.maven.community.pojo.Comment;
-import com.maven.community.pojo.CommentExample;
 
 import java.util.List;
 
@@ -21,7 +21,8 @@ public interface CommentService {
     /**
      * 根据Id查询问题
      * @param id 问题id
+     * @param type
      * @return list 问题列表
      * */
-    List<CommentDto> listByQuestionId(Long id);
+    List<CommentDto> listByQuestionId(Long id, CommentTypeEnum type);
 }

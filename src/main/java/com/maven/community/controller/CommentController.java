@@ -1,7 +1,9 @@
 package com.maven.community.controller;
 
 import com.maven.community.dto.CommenCreatetDto;
+import com.maven.community.dto.CommentDto;
 import com.maven.community.dto.ResultDto;
+import com.maven.community.enums.CommentTypeEnum;
 import com.maven.community.exception.CustomizeErrorCode;
 import com.maven.community.pojo.Comment;
 import com.maven.community.pojo.User;
@@ -9,12 +11,10 @@ import com.maven.community.service.CommentService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @author sunchuanjia
@@ -55,5 +55,14 @@ public class CommentController {
         comment.setLikeCount(0L);
         commentService.insert(comment);
         return ResultDto.okOf();
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/comment/{id}", method = RequestMethod.GET)
+    public ResultDto<List<CommentDto>> comments(@PathVariable(name = "id") Long id)
+    {
+        //查询到评论，放入result，以JSON格式传递到前端
+        List<CommentDto> commentDtos = commentService.listByQuestionId(id, CommentTypeEnum.COMMENT);
+        return ResultDto.okOf(commentDtos);
     }
 }

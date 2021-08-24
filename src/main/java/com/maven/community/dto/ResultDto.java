@@ -4,15 +4,17 @@ import com.maven.community.exception.CustomizeErrorCode;
 import com.maven.community.exception.CustomizeException;
 import lombok.Data;
 
+
 /**
  * @author sunchuanjia
  * @Description
  * @create 2021-08-21 16:17
  */
 @Data
-public class ResultDto {
+public class ResultDto<T> {
     private Integer code;
     private String message;
+    private T data;
 
     public static ResultDto errorOf(Integer code, String message)
     {
@@ -41,4 +43,12 @@ public class ResultDto {
         return errorOf(ex.getCode(), ex.getMessage());
     }
 
+    public static <T> ResultDto okOf(T t)
+    {
+        ResultDto resultDto = new ResultDto();
+        resultDto.setCode(200);
+        resultDto.setMessage("请求成功");
+        resultDto.setData(t);
+        return resultDto;
+    }
 }

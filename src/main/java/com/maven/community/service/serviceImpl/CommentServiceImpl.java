@@ -4,6 +4,7 @@ import com.maven.community.dto.CommentDto;
 import com.maven.community.enums.CommentTypeEnum;
 import com.maven.community.exception.CustomizeErrorCode;
 import com.maven.community.exception.CustomizeException;
+import com.maven.community.mapper.CommentExtMapper;
 import com.maven.community.mapper.CommentMapper;
 import com.maven.community.pojo.*;
 import com.maven.community.service.CommentService;
@@ -33,6 +34,8 @@ public class CommentServiceImpl implements CommentService {
     private QuestionService questionService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private CommentExtMapper commentExtMapper;
 
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -54,6 +57,11 @@ public class CommentServiceImpl implements CommentService {
                 throw new CustomizeException(CustomizeErrorCode.COMMENT_NOT_FOUND);
             }
             commentMapper.insert(comment);
+            //增加评论数
+            Comment parentComment = new Comment();
+            parentComment.setId(comment.getParentId());
+            parentComment.setCommentCount(1);
+            commentExtMapper.incCommentCount(parentComment);
         }else {
             //回复问题
             Question question = questionService.selectByPrimaryKey(comment.getParentId());
@@ -68,11 +76,11 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<CommentDto> listByQuestionId(Long id) {
+    public List<CommentDto> listByQuestionId(Long id, CommentTypeEnum type) {
         CommentExample commentExample = new CommentExample();
         commentExample.createCriteria()
                 .andParentIdEqualTo(id)
-                .andTypeEqualTo(CommentTypeEnum.QUESTION.getType());
+                .andTypeEqualTo(type.getType());
         commentExample.setOrderByClause("gmt_creat desc");
         List<Comment> comments = commentMapper.selectByExample(commentExample);
 
