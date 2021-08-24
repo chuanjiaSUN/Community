@@ -35,6 +35,19 @@ body{
     margin-top: 25px;
 }
 
+.question-tag{
+    margin-right: 5px;
+}
+
+.question-related{
+    line-height: 20px;
+    font-size: 14px;
+    padding-left: 0;
+    list-style: none;
+}
+.question-wechat{
+    width: 150px;
+}
 .community-menu {
     display: block;
     color: #999;

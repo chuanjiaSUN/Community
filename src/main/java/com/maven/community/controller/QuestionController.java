@@ -29,15 +29,16 @@ public class QuestionController {
     private CommentService commentService;
 
     @GetMapping("/question/{id}")
-    public String question(@PathVariable(name = "id") Long id, Model model)
-    {
+    public String question(@PathVariable(name = "id") Long id, Model model) {
         QuestionDto questionDto = questionService.getById(id);
         //CommentDto是后端传给前端的， CommentCreateDto是前端传给后端的
+        List<QuestionDto> relatedQuestion = questionService.selectRelated(questionDto);
         List<CommentDto> comments = commentService.listByQuestionId(id, CommentTypeEnum.QUESTION);
         //累加阅读数
         questionService.incView(id);
         model.addAttribute("question", questionDto);
         model.addAttribute("comments", comments);
+        model.addAttribute("relatedQuestion", relatedQuestion);
         return "question";
     }
 }

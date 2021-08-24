@@ -24,4 +24,11 @@ public interface QuestionExtMapper {
      * @return int
      * */
     int incComment(Question record);
+
+    /**
+     * selectRelated 查询标签相关的问题
+     * @param record 问题
+     * @return list 问题列表
+     * */
+    List<Question> selectRelated(Question record);
 }

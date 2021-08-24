@@ -11,12 +11,16 @@ import com.maven.community.pojo.QuestionExample;
 import com.maven.community.pojo.User;
 import com.maven.community.service.QuestionService;
 import com.maven.community.service.UserService;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.StringJoiner;
+import java.util.stream.Collectors;
 
 /**
  * @author sunchuanjia
@@ -174,6 +178,29 @@ public class QuestionServiceImpl implements QuestionService {
         questionExtMapper.incComment(question);
     }
 
+    @Override
+    public List<QuestionDto> selectRelated(QuestionDto queryDto) {
+        String tag = queryDto.getQuestion().getTag();
+        if (StringUtils.isBlank(tag))
+        {
+            return new ArrayList<QuestionDto>();
+        }else{
+            String[] tags = StringUtils.split(tag, ",");
+            String regexpTag = Arrays.stream(tags).collect(Collectors.joining("|"));
+            Question question = new Question();
+            question.setId(queryDto.getQuestion().getId());
+            question.setTag(regexpTag);
+
+            List<Question> questions = questionExtMapper.selectRelated(question);
+            List<QuestionDto> questionDtos = questions.stream().map(q -> {
+                QuestionDto questionDto = new QuestionDto();
+                questionDto.setQuestion(q);
+                return questionDto;
+            }).collect(Collectors.toList());
+            return questionDtos;
+        }
+    }
+
     public PaginationDto setPagination(PaginationDto paginationDto, int totalCount, Integer page, Integer size)
     {
         paginationDto.setPagination(totalCount, page, size);
@@ -187,7 +214,9 @@ public class QuestionServiceImpl implements QuestionService {
         }
         Integer offSet = size * (page - 1);
         /*List<Question> questionList = questionMapper.listPage(offSet, size);*/
-        List<Question> questionList = questionMapper.selectByExampleWithBLOBsWithRowbounds(new QuestionExample(), new RowBounds(offSet, size));
+        QuestionExample example = new QuestionExample();
+        example.setOrderByClause("gmt_create desc");
+        List<Question> questionList = questionMapper.selectByExampleWithBLOBsWithRowbounds(example, new RowBounds(offSet, size));
         List<QuestionDto> questionDtoList = new ArrayList<>();
         for (Question question : questionList)
         {

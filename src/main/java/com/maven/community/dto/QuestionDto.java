@@ -4,6 +4,7 @@ import com.maven.community.pojo.Question;
 import com.maven.community.pojo.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author sunchuanjia
@@ -12,6 +13,7 @@ import lombok.Data;
  */
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class QuestionDto {
     private Question question;
     private User user;

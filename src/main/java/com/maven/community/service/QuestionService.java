@@ -91,4 +91,11 @@ public interface QuestionService {
      * @param question 问题
      * */
     void incCommentCount(Question question);
+
+    /**
+     * 查询相关问题
+     * @param questionDto 问题
+     * @return list 相关问题列表
+     * */
+    List<QuestionDto> selectRelated(QuestionDto questionDto);
 }
