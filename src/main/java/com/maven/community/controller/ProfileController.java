@@ -2,6 +2,7 @@ package com.maven.community.controller;
 
 import com.maven.community.dto.PaginationDto;
 import com.maven.community.pojo.User;
+import com.maven.community.service.NotificationService;
 import com.maven.community.service.QuestionService;
 import com.maven.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +25,10 @@ public class ProfileController {
     private static final String PROFILE_QUESTIONS = "questions";
     private static final String PROFILE_REPLIES = "replies";
     @Autowired
-    private UserService userService;
+    private QuestionService questionService;
 
     @Autowired
-    private QuestionService questionService;
+    private NotificationService notificationService;
 
     @GetMapping("/profile/{action}")
     public String profile(@PathVariable(name = "action") String action,
@@ -47,14 +48,18 @@ public class ProfileController {
         {
             model.addAttribute("section","questions");
             model.addAttribute("sectionName","我的提问");
+            PaginationDto paginationDto = questionService.listUserQuestions(user.getId(), page, size);
+            model.addAttribute("pagination", paginationDto);
         }else if (PROFILE_REPLIES.equals(action))
         {
+            PaginationDto paginationDto = notificationService.listUserNotifications(user.getId(), page, size);
+            Long unreadCount = notificationService.unreadCount(user.getId());
+            model.addAttribute("pagination", paginationDto);
             model.addAttribute("section","replies");
+            model.addAttribute("unreadCount",unreadCount);
             model.addAttribute("sectionName","最新回复");
         }
 
-        PaginationDto userQuestions = questionService.listUserQuestions(user.getId(), page, size);
-        model.addAttribute("pagination", userQuestions);
         return "profile";
     }
 }

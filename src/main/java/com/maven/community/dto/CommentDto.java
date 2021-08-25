@@ -2,8 +2,7 @@ package com.maven.community.dto;
 
 import com.maven.community.pojo.User;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+
 
 /**
  * @author sunchuanjia

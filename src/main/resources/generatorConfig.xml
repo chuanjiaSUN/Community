@@ -34,6 +34,8 @@
         <table schema="DB2ADMIN" tableName="user" domainObjectName="User" ></table>
         <table schema="DB2ADMIN" tableName="question" domainObjectName="Question" ></table>
         <table schema="DB2ADMIN" tableName="comment" domainObjectName="Comment" ></table>
+        <table schema="DB2ADMIN" tableName="notification" domainObjectName="Notification" ></table>
+
 
     </context>
 </generatorConfiguration>

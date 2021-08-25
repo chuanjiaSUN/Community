@@ -11,9 +11,9 @@ import java.util.List;
  * @create 2021-08-16 21:49
  */
 @Data
-public class PaginationDto {
+public class PaginationDto<T> {
     private static final int PAGE_ALIAS_NUM = 3;
-    private List<QuestionDto> questions;
+    private List<T> data;
     private boolean showPrevious;
     private boolean showFirstPage;
     private boolean showNext;
@@ -49,7 +49,7 @@ public class PaginationDto {
         }
         //是否展示上一页和下一页
         showPrevious = page != 1;
-        showNext = page != totalPages;
+        showNext = !page.equals(totalPages);
         //是否展示第一页和最后一页
         showFirstPage = !pages.contains(1);
         showEndPage = !pages.contains(totalPages);

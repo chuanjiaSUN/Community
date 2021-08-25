@@ -3,6 +3,7 @@ package com.maven.community.service;
 import com.maven.community.dto.CommentDto;
 import com.maven.community.enums.CommentTypeEnum;
 import com.maven.community.pojo.Comment;
+import com.maven.community.pojo.User;
 
 import java.util.List;
 
@@ -15,8 +16,8 @@ public interface CommentService {
     /**
      * insert 插入
      * @param comment 评论
-     * */
-    void insert(Comment comment);
+     * @param user*/
+    void insert(Comment comment, User user);
 
     /**
      * 根据Id查询问题

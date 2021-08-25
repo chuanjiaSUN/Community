@@ -90,6 +90,7 @@ public class QuestionServiceImpl implements QuestionService {
         Integer offSet = size * (page - 1);
         /*List<Question> questionList = questionMapper.listPageById(id, offSet, size);*/
         QuestionExample questionExample = new QuestionExample();
+        questionExample.setOrderByClause("gmt_create desc");
         questionExample.createCriteria().andCreatorEqualTo(id);
         List<Question> questionList = questionMapper.selectByExampleWithBLOBsWithRowbounds(questionExample, new RowBounds(offSet, size));
         List<QuestionDto> questionDtoList = new ArrayList<>();
@@ -98,7 +99,7 @@ public class QuestionServiceImpl implements QuestionService {
         {
             questionDtoList.add(new QuestionDto(question, user));
         }
-        paginationDto.setQuestions(questionDtoList);
+        paginationDto.setData(questionDtoList);
         return paginationDto;
     }
 
@@ -223,7 +224,7 @@ public class QuestionServiceImpl implements QuestionService {
             User user = userService.findById(question.getCreator());
             questionDtoList.add(new QuestionDto(question, user));
         }
-        paginationDto.setQuestions(questionDtoList);
+        paginationDto.setData(questionDtoList);
         return paginationDto;
     }
 
