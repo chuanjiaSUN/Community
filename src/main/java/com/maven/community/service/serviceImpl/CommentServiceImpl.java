@@ -82,6 +82,8 @@ public class CommentServiceImpl implements CommentService {
             {
                 throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
             }
+            //初始化评论数
+            comment.setCommentCount(0);
             commentMapper.insert(comment);
             question.setCommentCount(1);
             questionService.incCommentCount(question);
@@ -92,6 +94,11 @@ public class CommentServiceImpl implements CommentService {
     }
 
     private void createNotify(Comment comment, Long receiver, String notifierName, String outerTitle, NotificationTypeEnum notificationType, Long outerId) {
+        if (receiver.equals(comment.getCommentator()))
+        {
+            //如果评论者与 被通知者相同， 不创建通知
+            return;
+        }
         Notification notification = new Notification();
         notification.setGmtCreate(System.currentTimeMillis());
         notification.setType(notificationType.getType());

@@ -1,6 +1,7 @@
 package com.maven.community.interceptors;
 
 import com.maven.community.pojo.User;
+import com.maven.community.service.NotificationService;
 import com.maven.community.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,8 @@ import java.util.List;
 public class SessionInterceptor implements HandlerInterceptor{
     @Autowired
     private UserService userService;
-
+    @Autowired
+    private NotificationService notificationService;
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         log.info("SessionInterceptor + preHandle拦截的请求是： "+request.getRequestURI());
@@ -39,7 +41,10 @@ public class SessionInterceptor implements HandlerInterceptor{
                     List<User> users = userService.findByToken(token);
                     if (users.size() != 0)
                     {
-                        request.getSession().setAttribute("user", users.get(0));
+                        User user = users.get(0);
+                        request.getSession().setAttribute("user", user);
+                        Long unreadCount = notificationService.unreadCount(user.getId());
+                        request.getSession().setAttribute("unreadMessage", unreadCount);
                     }
 
                     break;

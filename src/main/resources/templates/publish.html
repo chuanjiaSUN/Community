@@ -6,9 +6,11 @@
     <link rel="stylesheet" href= "/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="/css/community.css">
+    <link rel="stylesheet" href="/css/editormd.min.css">
     <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
     <script src="/js/bootstrap.min.js" type="application/javascript"></script>
     <script src="/js/community.js" type="application/javascript"></script>
+    <script src="/js/editormd.min.js" type="application/javascript"></script>
 
 
 </head>
@@ -31,10 +33,26 @@
                            placeholder="问题标题__">
                 </div>
                 <!--描述-->
-                <div class="form-group">
+                <div class="form-group" id="question-editor">
                     <label for="description">问题补充(必填，请参照右侧提示)：</label>
-                    <textarea class="form-control" th:value="${description}" name="description" id="description" cols="30" rows="10"></textarea>
+                    <textarea class="form-control" th:text="${description}" name="description" id="description" style="display:none;"
+                              cols="30" rows="10"></textarea>
                 </div>
+                <script type="text/javascript">
+                    $(function() {
+                        var editor = editormd("question-editor", {
+                            width  : "100%",
+                            height : 350,
+                            path   : "/js/lib/",
+                            delay  : 0,
+                            watch  : false,
+                            placeholder: "请输入问题描述...",
+                            imageUpload    : true,
+                            imageFormats   : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+                            imageUploadURL : "/file/upload",
+                        });
+                    });
+                </script>
                 <!--标签-->
                 <div class="form-group">
                     <label for="tag">添加标签</label>
