@@ -1,0 +1,40 @@
+2021-08-28 13:37:04.625  INFO 9668 --- [restartedMain] c.maven.community.CommunityApplication   : Starting CommunityApplication using Java 1.8.0_271 on LAPTOP-G2OB1RN4 with PID 9668 (C:\Users\麻辣兔丁\IdeaProjects\scjproject\target\classes started by 麻辣兔丁 in C:\Users\麻辣兔丁\IdeaProjects\scjproject)
+2021-08-28 13:37:04.626  INFO 9668 --- [restartedMain] c.maven.community.CommunityApplication   : No active profile set, falling back to default profiles: default
+2021-08-28 13:37:05.176  INFO 9668 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8887 (http)
+2021-08-28 13:37:05.178  INFO 9668 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-08-28 13:37:05.179  INFO 9668 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.45]
+2021-08-28 13:37:05.200  INFO 9668 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-08-28 13:37:05.200  INFO 9668 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 568 ms
+2021-08-28 13:37:05.244  INFO 9668 --- [restartedMain] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2021-08-28 13:37:05.261  INFO 9668 --- [restartedMain] com.alibaba.druid.pool.DruidDataSource   : {dataSource-2} inited
+2021-08-28 13:37:05.525  INFO 9668 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2021-08-28 13:37:05.547  INFO 9668 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2021-08-28 13:37:05.629  INFO 9668 --- [restartedMain] o.f.c.internal.database.DatabaseFactory  : Database: jdbc:mysql://localhost:3306/community (MySQL 8.0)
+2021-08-28 13:37:05.680  INFO 9668 --- [restartedMain] o.f.core.internal.command.DbValidate     : Successfully validated 13 migrations (execution time 00:00.037s)
+2021-08-28 13:37:05.692  INFO 9668 --- [restartedMain] o.f.core.internal.command.DbMigrate      : Current version of schema `community`: 13
+2021-08-28 13:37:05.693  INFO 9668 --- [restartedMain] o.f.core.internal.command.DbMigrate      : Schema `community` is up to date. No migration necessary.
+2021-08-28 13:37:05.726  INFO 9668 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2021-08-28 13:37:05.753  INFO 9668 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8887 (http) with context path ''
+2021-08-28 13:37:05.759  INFO 9668 --- [restartedMain] c.maven.community.CommunityApplication   : Started CommunityApplication in 1.215 seconds (JVM running for 1248.877)
+2021-08-28 13:37:05.762  INFO 9668 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2021-08-28 13:37:44.627  INFO 6360 --- [restartedMain] c.maven.community.CommunityApplication   : Starting CommunityApplication using Java 1.8.0_271 on LAPTOP-G2OB1RN4 with PID 6360 (C:\Users\麻辣兔丁\IdeaProjects\scjproject\target\classes started by 麻辣兔丁 in C:\Users\麻辣兔丁\IdeaProjects\scjproject)
+2021-08-28 13:37:44.630  INFO 6360 --- [restartedMain] c.maven.community.CommunityApplication   : No active profile set, falling back to default profiles: default
+2021-08-28 13:37:44.696  INFO 6360 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2021-08-28 13:37:44.696  INFO 6360 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2021-08-28 13:37:46.155  INFO 6360 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8887 (http)
+2021-08-28 13:37:46.165  INFO 6360 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-08-28 13:37:46.166  INFO 6360 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.45]
+2021-08-28 13:37:46.289  INFO 6360 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-08-28 13:37:46.290  INFO 6360 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1593 ms
+2021-08-28 13:37:46.447  INFO 6360 --- [restartedMain] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2021-08-28 13:37:46.562  INFO 6360 --- [restartedMain] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2021-08-28 13:37:47.134  INFO 6360 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2021-08-28 13:37:47.219  INFO 6360 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2021-08-28 13:37:47.385  INFO 6360 --- [restartedMain] o.f.c.internal.license.VersionPrinter    : Flyway Community Edition 5.2.1 by Boxfuse
+2021-08-28 13:37:47.804  INFO 6360 --- [restartedMain] o.f.c.internal.database.DatabaseFactory  : Database: jdbc:mysql://localhost:3306/community (MySQL 8.0)
+2021-08-28 13:37:47.906  INFO 6360 --- [restartedMain] o.f.core.internal.command.DbValidate     : Successfully validated 13 migrations (execution time 00:00.049s)
+2021-08-28 13:37:47.924  INFO 6360 --- [restartedMain] o.f.core.internal.command.DbMigrate      : Current version of schema `community`: 13
+2021-08-28 13:37:47.925  INFO 6360 --- [restartedMain] o.f.core.internal.command.DbMigrate      : Schema `community` is up to date. No migration necessary.
+2021-08-28 13:37:48.104  INFO 6360 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2021-08-28 13:37:48.155  INFO 6360 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8887 (http) with context path ''
+2021-08-28 13:37:48.171  INFO 6360 --- [restartedMain] c.maven.community.CommunityApplication   : Started CommunityApplication in 4.144 seconds (JVM running for 5.476)
