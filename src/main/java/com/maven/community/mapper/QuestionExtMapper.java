@@ -1,5 +1,6 @@
 package com.maven.community.mapper;
 
+import com.maven.community.dto.QuestionQueryDto;
 import com.maven.community.pojo.Comment;
 import com.maven.community.pojo.Question;
 import com.maven.community.pojo.QuestionExample;
@@ -31,4 +32,17 @@ public interface QuestionExtMapper {
      * @return list 问题列表
      * */
     List<Question> selectRelated(Question record);
+
+    /**
+     * countBySearch 开启搜索时
+     * @param questionQueryDto 查询例子
+     * @return int 问题数
+     * */
+    Integer countBySearch(QuestionQueryDto questionQueryDto);
+
+    /**
+     * 根据questionQueryDto查询问题
+     * @param questionQueryDto 分页查询封装对象
+     * */
+    List<Question> selectBySearch(QuestionQueryDto questionQueryDto);
 }

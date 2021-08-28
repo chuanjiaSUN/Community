@@ -2,6 +2,7 @@ package com.maven.community.service.serviceImpl;
 
 import com.maven.community.dto.PaginationDto;
 import com.maven.community.dto.QuestionDto;
+import com.maven.community.dto.QuestionQueryDto;
 import com.maven.community.exception.CustomizeErrorCode;
 import com.maven.community.exception.CustomizeException;
 import com.maven.community.mapper.QuestionExtMapper;
@@ -16,10 +17,10 @@ import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 /**
@@ -62,14 +63,46 @@ public class QuestionServiceImpl implements QuestionService {
 
     /**显示首页分页*/
     @Override
-    public PaginationDto listPage(Integer page, Integer size) {
+    public PaginationDto listPage(String search, Integer page, Integer size) {
+        //当搜索时
+        if (StringUtils.isNotBlank(search))
+        {
+            String[] tags = StringUtils.split(search, " ");
+            search = Arrays.stream(tags).collect(Collectors.joining("|"));
+        }
         PaginationDto paginationDto = new PaginationDto();
-        Integer totalCount = selectCount();
-        return setPagination(paginationDto, totalCount, page, size);
+        QuestionQueryDto questionQueryDto = new QuestionQueryDto();
+        questionQueryDto.setSearch(search);
+        Integer totalCount = questionExtMapper.countBySearch(questionQueryDto);
+        paginationDto.setPagination(totalCount, page, size);
+        if (page < 1)
+        {
+            page = 1;
+        }
+        if (page > paginationDto.getTotalPages())
+        {
+            page = paginationDto.getTotalPages();
+        }
+        Integer offSet = size * (page - 1);
+        /*List<Question> questionList = questionMapper.listPage(offSet, size);*/
+//        QuestionExample example = new QuestionExample();
+//        example.setOrderByClause("gmt_create desc");
+//        List<Question> questionList = questionMapper.selectByExampleWithBLOBsWithRowbounds(example, new RowBounds(offSet, size));
+        questionQueryDto.setPage(page);
+        questionQueryDto.setSize(size);
+        List<Question> questionList = questionExtMapper.selectBySearch(questionQueryDto);
+        List<QuestionDto> questionDtoList = new ArrayList<>();
+        for (Question question : questionList)
+        {
+            User user = userService.findById(question.getCreator());
+            questionDtoList.add(new QuestionDto(question, user));
+        }
+        paginationDto.setData(questionDtoList);
+        return paginationDto;
     }
 
     @Override
-    public Integer selectCount() {
+    public Integer  selectCount() {
         return (int)questionMapper.countByExample(new QuestionExample());
     }
 
@@ -201,34 +234,4 @@ public class QuestionServiceImpl implements QuestionService {
             return questionDtos;
         }
     }
-
-    public PaginationDto setPagination(PaginationDto paginationDto, int totalCount, Integer page, Integer size)
-    {
-        paginationDto.setPagination(totalCount, page, size);
-        if (page < 1)
-        {
-            page = 1;
-        }
-        if (page > paginationDto.getTotalPages())
-        {
-            page = paginationDto.getTotalPages();
-        }
-        Integer offSet = size * (page - 1);
-        /*List<Question> questionList = questionMapper.listPage(offSet, size);*/
-        QuestionExample example = new QuestionExample();
-        example.setOrderByClause("gmt_create desc");
-        List<Question> questionList = questionMapper.selectByExampleWithBLOBsWithRowbounds(example, new RowBounds(offSet, size));
-        List<QuestionDto> questionDtoList = new ArrayList<>();
-        for (Question question : questionList)
-        {
-            User user = userService.findById(question.getCreator());
-            questionDtoList.add(new QuestionDto(question, user));
-        }
-        paginationDto.setData(questionDtoList);
-        return paginationDto;
-    }
-
-
-
-
 }

@@ -32,11 +32,13 @@ public interface QuestionService {
 
     /**
      * listPage 分页查询
+     *
+     * @param search 是否要搜索功能
      * @param page 分页起始页码
      * @param size 大小
      * @return list 分页查询结果
      * */
-    PaginationDto listPage(Integer page, Integer size);
+    PaginationDto listPage(String search, Integer page, Integer size);
 
     /**
      * selectCount 获取数据库中question的总数
