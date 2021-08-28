@@ -105,7 +105,7 @@
     </where>
   </select>
 
-  <select id="selectBySearch" resultType="com.maven.community.pojo.Question" resultMap="BaseResultMap">
+  <select id="selectBySearch" parameterType="com.maven.community.dto.QuestionQueryDto" resultMap="BaseResultMap">
     select
     *
     from
