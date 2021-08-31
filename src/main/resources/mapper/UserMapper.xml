@@ -103,7 +103,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from user
+    from USER
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
