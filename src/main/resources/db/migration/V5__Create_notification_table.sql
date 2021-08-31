@@ -1,4 +1,4 @@
-CREATE TABLE notification(
+CREATE TABLE `NOTIFICATION`(
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `notifier` BIGINT NOT NULL,
   `receiver` BIGINT NOT NULL,
@@ -6,5 +6,7 @@ CREATE TABLE notification(
   `type` INT NOT NULL,
   `gmt_create` BIGINT NOT NULL,
   `status` INT NOT NULL DEFAULT 0,
+  `notifier_name` VARCHAR(100) DEFAULT NULL,
+  `outer_title` VARCHAR(256) DEFAULT NULL,
   PRIMARY KEY (`id`)
 );

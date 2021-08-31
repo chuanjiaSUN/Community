@@ -1,1 +1,0 @@
-ALTER TABLE `comment` MODIFY COLUMN commentator BIGINT;
