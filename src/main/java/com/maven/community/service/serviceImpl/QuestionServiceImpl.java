@@ -17,7 +17,6 @@ import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -74,21 +73,28 @@ public class QuestionServiceImpl implements QuestionService {
         QuestionQueryDto questionQueryDto = new QuestionQueryDto();
         questionQueryDto.setSearch(search);
         Integer totalCount = questionExtMapper.countBySearch(questionQueryDto);
-        paginationDto.setPagination(totalCount, page, size);
+        Integer totalPages;
+        if(totalCount % size == 0)
+        {
+            totalPages = totalCount / size;
+        }else{
+            totalPages = totalCount / size + 1;
+        }
         if (page < 1)
         {
             page = 1;
         }
-        if (page > paginationDto.getTotalPages())
+        if (page > totalPages)
         {
-            page = paginationDto.getTotalPages();
+            page = totalPages;
         }
-        Integer offSet = size * (page - 1);
+        paginationDto.setPagination(totalCount, page, size, totalPages);
+        Integer offSet = page < 1 ? 0 : size * (page - 1);
         /*List<Question> questionList = questionMapper.listPage(offSet, size);*/
 //        QuestionExample example = new QuestionExample();
 //        example.setOrderByClause("gmt_create desc");
 //        List<Question> questionList = questionMapper.selectByExampleWithBLOBsWithRowbounds(example, new RowBounds(offSet, size));
-        questionQueryDto.setPage(page);
+        questionQueryDto.setPage(offSet);
         questionQueryDto.setSize(size);
         List<Question> questionList = questionExtMapper.selectBySearch(questionQueryDto);
         List<QuestionDto> questionDtoList = new ArrayList<>();

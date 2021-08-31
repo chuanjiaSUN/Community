@@ -1,0 +1,1 @@
+ALTER TABLE `USER` CHANGE `name` `name` VARCHAR(50) CHARSET utf8 COLLATE utf8_general_ci NULL;

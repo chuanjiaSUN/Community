@@ -7,5 +7,5 @@ CREATE TABLE `COMMENT`(
     gmt_modified BIGINT NOT NULL,
     like_count BIGINT DEFAULT 0,
     content VARCHAR(1024) NULL,
-    comment_count INT DEFAULT 0;
+    comment_count INT DEFAULT 0
 );
